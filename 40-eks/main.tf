@@ -11,12 +11,17 @@ module "eks" {
   #cluster_service_ipv4_cidr = var.cluster_service_ipv4_cidr
   cluster_name    = "${var.project_name}-${var.environment}"
   cluster_version = "1.31"
+
+  # it should be false in production environments
   cluster_endpoint_public_access = true
+
   vpc_id                   = local.vpc_id
   subnet_ids               = split(",", local.private_subnet_ids)
   control_plane_subnet_ids = split(",", local.private_subnet_ids)
+
   create_cluster_security_group = false
   cluster_security_group_id     = local.cluster_sg_id
+
   create_node_security_group = false
   node_security_group_id     = local.node_sg_id
   # the user which you used to create cluster will get admin access
